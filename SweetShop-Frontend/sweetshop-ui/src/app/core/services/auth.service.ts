@@ -3,13 +3,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { LoginRequest, SignupRequest, AuthResponse } from '../models/auth.model';
 
+interface JwtPayload {
+  sub: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private readonly API_URL = 'http://localhost:8080/api/auth';
   private readonly TOKEN_KEY = 'auth_token';
-  
+
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
@@ -63,5 +70,31 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this.hasToken();
+  }
+
+  private decodeToken(): JwtPayload | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = token.split('.')[1];
+      const decodedPayload = atob(payload);
+      return JSON.parse(decodedPayload);
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+
+
+  // Check if the current user has admin role
+  isAdmin(): boolean {
+    const payload = this.decodeToken();
+    if (!payload) {
+      return false;
+    }
+    return payload.role?.toLowerCase() === 'admin';
   }
 }

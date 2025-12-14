@@ -1,0 +1,365 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="20" fill="#FF6B9D"/>
+            <path d="M24 12c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7zm0 18c-5 0-10 2.5-10 5v2h20v-2c0-2.5-5-5-10-5z" fill="white"/>
+          </svg>
+        </div>
+        <h1>Sweet Shop</h1>
+      </div>
+      <div class="header-actions">
+        <button *ngIf="isLoggedIn" class="btn-add" (click)="openAddModal()">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          </svg>
+          Add Sweet
+        </button>
+        <button *ngIf="isLoggedIn" class="btn-logout" (click)="logout()">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+          </svg>
+          Logout
+        </button>
+        <button *ngIf="!isLoggedIn" class="btn-login" (click)="goToLogin()">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/>
+          </svg>
+          Login
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Messages -->
+  <div class="messages-container" *ngIf="errorMessage || successMessage">
+    <div *ngIf="errorMessage" class="message error-message">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      </svg>
+      <span>{{ errorMessage }}</span>
+      <button class="close-btn" (click)="errorMessage = ''">&times;</button>
+    </div>
+    <div *ngIf="successMessage" class="message success-message">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+      <span>{{ successMessage }}</span>
+      <button class="close-btn" (click)="successMessage = ''">&times;</button>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <section class="search-section">
+    <div class="search-container">
+      <h2>Find Your Favorite Sweets</h2>
+      <div class="search-filters">
+        <div class="filter-group">
+          <label>Name</label>
+          <input 
+            type="text" 
+            [(ngModel)]="searchName" 
+            placeholder="Search by name..."
+            (keyup.enter)="searchSweets()"
+          />
+        </div>
+        <div class="filter-group">
+          <label>Category</label>
+          <select [(ngModel)]="searchCategory">
+            <option value="">All Categories</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Min Price</label>
+          <input 
+            type="number" 
+            [(ngModel)]="searchMinPrice" 
+            placeholder="₹ Min"
+            min="0"
+          />
+        </div>
+        <div class="filter-group">
+          <label>Max Price</label>
+          <input 
+            type="number" 
+            [(ngModel)]="searchMaxPrice" 
+            placeholder="₹ Max"
+            min="0"
+          />
+        </div>
+        <div class="filter-actions">
+          <button class="btn-search" (click)="searchSweets()">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            Search
+          </button>
+          <button class="btn-clear" (click)="clearFilters()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading sweets...</p>
+  </div>
+
+  <!-- Sweets Grid -->
+  <section class="sweets-section" *ngIf="!isLoading">
+    <div class="sweets-header">
+      <h2>Available Sweets</h2>
+      <span class="sweet-count">{{ filteredSweets.length }} items</span>
+    </div>
+
+    <div *ngIf="filteredSweets.length === 0" class="no-sweets">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+      <p>No sweets found. Try adjusting your search filters.</p>
+    </div>
+
+    <div class="sweets-grid">
+      <div *ngFor="let sweet of filteredSweets" class="sweet-card">
+        <div class="sweet-image">
+          <div class="sweet-placeholder">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <span class="category-badge">{{ sweet.category }}</span>
+          <span 
+            class="stock-badge" 
+            [class.out-of-stock]="sweet.quantity === 0"
+            [class.low-stock]="sweet.quantity > 0 && sweet.quantity <= 10"
+          >
+            {{ sweet.quantity === 0 ? 'Out of Stock' : sweet.quantity <= 10 ? 'Low Stock' : 'In Stock' }}
+          </span>
+        </div>
+        <div class="sweet-details">
+          <h3>{{ sweet.name }}</h3>
+          <p class="description">{{ sweet.description || 'Delicious traditional sweet' }}</p>
+          <div class="sweet-meta">
+            <span class="price">₹{{ sweet.price }}</span>
+            <span class="quantity">Qty: {{ sweet.quantity }}</span>
+          </div>
+        </div>
+        <div class="sweet-actions">
+          <button 
+            class="btn-purchase" 
+            [disabled]="sweet.quantity === 0"
+            (click)="openPurchaseModal(sweet)"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+            Purchase
+          </button>
+          <div class="admin-actions" *ngIf="isLoggedIn">
+            <!-- Edit button - available to all logged in users -->
+            <button class="btn-icon btn-edit" title="Edit" (click)="openEditModal(sweet)">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+              </svg>
+            </button>
+            <!-- Restock button - Admin only -->
+            <button *ngIf="isAdmin" class="btn-icon btn-restock" title="Restock (Admin)" (click)="openRestockModal(sweet)">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+              </svg>
+            </button>
+            <!-- Delete button - Admin only -->
+            <button *ngIf="isAdmin" class="btn-icon btn-delete" title="Delete (Admin)" (click)="openDeleteModal(sweet)">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add Sweet Modal -->
+  <div class="modal-overlay" *ngIf="showAddModal" (click)="closeAddModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Add New Sweet</h2>
+        <button class="close-btn" (click)="closeAddModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Name *</label>
+          <input type="text" [(ngModel)]="sweetForm.name" placeholder="Enter sweet name" />
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select [(ngModel)]="sweetForm.category">
+            <option value="">Select category</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price (₹) *</label>
+            <input type="number" [(ngModel)]="sweetForm.price" placeholder="0.00" min="0" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Quantity *</label>
+            <input type="number" [(ngModel)]="sweetForm.quantity" placeholder="0" min="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="sweetForm.description" placeholder="Enter description" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeAddModal()">Cancel</button>
+        <button class="btn-submit" (click)="addSweet()" [disabled]="isLoading">
+          {{ isLoading ? 'Adding...' : 'Add Sweet' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Sweet Modal -->
+  <div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Edit Sweet</h2>
+        <button class="close-btn" (click)="closeEditModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Name *</label>
+          <input type="text" [(ngModel)]="sweetForm.name" placeholder="Enter sweet name" />
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select [(ngModel)]="sweetForm.category">
+            <option value="">Select category</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price (₹) *</label>
+            <input type="number" [(ngModel)]="sweetForm.price" placeholder="0.00" min="0" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Quantity *</label>
+            <input type="number" [(ngModel)]="sweetForm.quantity" placeholder="0" min="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="sweetForm.description" placeholder="Enter description" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeEditModal()">Cancel</button>
+        <button class="btn-submit" (click)="updateSweet()" [disabled]="isLoading">
+          {{ isLoading ? 'Updating...' : 'Update Sweet' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
+    <div class="modal modal-sm" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Delete Sweet</h2>
+        <button class="close-btn" (click)="closeDeleteModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="delete-warning">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <p>Are you sure you want to delete <strong>{{ selectedSweet?.name }}</strong>?</p>
+          <p class="warning-text">This action cannot be undone. Admin access required.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn-danger" (click)="deleteSweet()" [disabled]="isLoading">
+          {{ isLoading ? 'Deleting...' : 'Delete' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Purchase Modal -->
+  <div class="modal-overlay" *ngIf="showPurchaseModal" (click)="closePurchaseModal()">
+    <div class="modal modal-sm" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Purchase Sweet</h2>
+        <button class="close-btn" (click)="closePurchaseModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="purchase-info">
+          <h3>{{ selectedSweet?.name }}</h3>
+          <p class="price">₹{{ selectedSweet?.price }} per unit</p>
+          <p class="available">Available: {{ selectedSweet?.quantity }} units</p>
+        </div>
+        <div class="form-group">
+          <label>Quantity to Purchase</label>
+          <input 
+            type="number" 
+            [(ngModel)]="actionQuantity" 
+            min="1" 
+            [max]="selectedSweet?.quantity ?? 1"
+          />
+        </div>
+        <div class="total-price">
+          <span>Total:</span>
+          <strong>₹{{ (selectedSweet?.price || 0) * actionQuantity }}</strong>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closePurchaseModal()">Cancel</button>
+        <button class="btn-submit" (click)="purchaseSweet()" [disabled]="isLoading || actionQuantity < 1">
+          {{ isLoading ? 'Processing...' : 'Confirm Purchase' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Restock Modal -->
+  <div class="modal-overlay" *ngIf="showRestockModal" (click)="closeRestockModal()">
+    <div class="modal modal-sm" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Restock Sweet</h2>
+        <button class="close-btn" (click)="closeRestockModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="restock-info">
+          <h3>{{ selectedSweet?.name }}</h3>
+          <p class="current-stock">Current Stock: {{ selectedSweet?.quantity }} units</p>
+        </div>
+        <div class="form-group">
+          <label>Quantity to Add</label>
+          <input type="number" [(ngModel)]="actionQuantity" min="1" />
+        </div>
+        <div class="new-stock">
+          <span>New Stock:</span>
+          <strong>{{ (selectedSweet?.quantity || 0) + actionQuantity }} units</strong>
+        </div>
+        <p class="admin-note">Note: Admin access required for restocking.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeRestockModal()">Cancel</button>
+        <button class="btn-submit" (click)="restockSweet()" [disabled]="isLoading || actionQuantity < 1">
+          {{ isLoading ? 'Processing...' : 'Confirm Restock' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
