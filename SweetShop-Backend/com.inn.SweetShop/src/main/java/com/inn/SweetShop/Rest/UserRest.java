@@ -12,7 +12,6 @@ import java.util.Map;
  */
 @RequestMapping(path = "/api/auth")
 public interface UserRest {
-
     // Register new user
     @PostMapping(path = "/signup")
     ResponseEntity<String> signUp(@RequestBody Map<String, String> requestMap);
