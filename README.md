@@ -1,126 +1,134 @@
 # Sweet Shop Management System 🍬
 
-A modern **Sweet Shop Management System** built with Spring Boot and JWT-based authentication. This application allows users to manage sweet inventory, handle purchases, and perform CRUD operations securely with role-based access control.
+A modern, full-stack **Sweet Shop Management System** that enables users to browse, search, and purchase sweets while providing administrators with comprehensive inventory management capabilities. Built with Angular 19 for a dynamic frontend experience and Spring Boot 4.0 for a robust, secure backend with JWT-based authentication.
 
 ## 📋 Table of Contents
 
+- [Project Overview](#project-overview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation \& Setup](#installation--setup)
-- [API Endpoints](#api-endpoints)
-- [Authentication](#authentication)
-- [Database Schema](#database-schema)
+- [Setup Instructions](#setup-instructions)
+  - [Prerequisites](#prerequisites)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
+- [Screenshots](#screenshots)
 - [My AI Usage](#my-ai-usage)
-- [Testing](#testing)
-- [Contributing](#contributing)
+
+---
+
+## 🎯 Project Overview
+
+The Sweet Shop Management System is a comprehensive web application designed to digitize and streamline sweet shop operations. The system provides:
+
+- **Customer-facing features**: Browse sweet catalog, search and filter products, view details, and make purchases
+- **Admin capabilities**: Add, update, delete sweets, manage inventory, and restock products
+- **Secure authentication**: JWT-based authentication system with role-based access control (User/Admin)
+- **Real-time inventory**: Automatic quantity updates upon purchases with low-stock management
+
+The application follows modern software architecture principles with a clear separation between frontend and backend, RESTful API design, and secure data handling practices.
 
 ---
 
 ## ✨ Features
 
-- **User Authentication \& Authorization**: JWT-based secure login with role-based access control (Admin/User)
-- **Sweet Inventory Management**: CRUD operations for sweet items
-- **Search \& Filter**: Search sweets by name, category, and price range
-- **Purchase System**: Handle sweet purchases with automatic quantity updates
-- **Restock Management**: Admin-only feature to restock inventory
-- **Secure Endpoints**: Protected routes with JWT token validation
-- **PostgreSQL Database**: Persistent data storage with JPA/Hibernate
-- **Environment Configuration**: Secure credential management using `.env` files
+### User Features
+- 🔐 **User Authentication**: Secure signup and login with JWT tokens
+- 🍭 **Browse Sweets**: View all available sweets with details (name, category, price, quantity)
+- 🔍 **Search & Filter**: Search sweets by name, category, or price range
+- 🛒 **Purchase System**: Buy sweets with automatic inventory updates
+- 📱 **Responsive Design**: Modern, mobile-friendly interface
+
+### Admin Features
+- ➕ **Add Sweets**: Create new sweet products with details
+- ✏️ **Update Products**: Modify existing sweet information
+- 🗑️ **Delete Sweets**: Remove products from inventory
+- 📦 **Restock Management**: Replenish inventory quantities
+- 👥 **User Management**: Role-based access control
+
+### Technical Features
+- 🔒 **JWT Authentication**: Secure token-based authentication
+- 🛡️ **Spring Security**: Protected endpoints with role-based authorization
+- 💾 **PostgreSQL Database**: Persistent data storage with JPA/Hibernate
+- 🌐 **CORS Configuration**: Proper cross-origin resource sharing setup
+- ⚡ **RESTful API**: Well-structured API endpoints following REST principles
 
 ---
 
 ## 🛠 Tech Stack
 
-### Backend
-- **Java 17**
-- **Spring Boot 4.0.0**
-- **Spring Security** with JWT (JSON Web Tokens)
-- **Spring Data JPA** (Hibernate)
-- **PostgreSQL** database
-- **Lombok** for boilerplate reduction
-- **Maven** for dependency management
+### Frontend
+- **Angular 19.2.0** - Modern web framework
+- **TypeScript 5.7.2** - Type-safe JavaScript
+- **RxJS 7.8.0** - Reactive programming
+- **Angular Forms** - Reactive form handling
+- **Angular Router** - Client-side routing
 
-### Security
-- **JWT (jjwt 0.13.0)** for authentication
-- **BCrypt** password hashing
-- **Role-based access control** (ADMIN/USER)
+### Backend
+- **Java 17** - Programming language
+- **Spring Boot 4.0.0** - Application framework
+- **Spring Security** - Authentication & authorization
+- **Spring Data JPA** - Database abstraction with Hibernate
+- **PostgreSQL** - Relational database
+- **JWT (jjwt 0.13.0)** - JSON Web Token authentication
+- **Lombok** - Boilerplate code reduction
+- **Maven** - Dependency management
 
 ### Development Tools
-- **dotenv-java** for environment variable management
-- **H2 Database** for testing
+- **dotenv-java** - Environment variable management
+- **H2 Database** - In-memory database for testing
+- **JUnit 5** - Unit testing framework
 
 ---
 
-## 📁 Project Structure
+## 🚀 Setup Instructions
 
-```
-com.inn.SweetShop/
-├── src/
-│   ├── main/
-│   │   ├── java/com/inn/SweetShop/
-│   │   │   ├── config/          # Configuration classes (Security, CORS, DotEnv)
-│   │   │   ├── Constants/       # Application constants
-│   │   │   ├── Dao/             # Data Access Objects (Repositories)
-│   │   │   ├── JWT/             # JWT Filter and utilities
-│   │   │   ├── POJO/            # Plain Old Java Objects (Entities)
-│   │   │   │   ├── Sweet.java
-│   │   │   │   └── User.java
-│   │   │   ├── Rest/            # REST controller interfaces
-│   │   │   ├── RestImpl/        # REST controller implementations
-│   │   │   ├── Service/         # Service layer interfaces
-│   │   │   ├── ServiceImpl/     # Service layer implementations
-│   │   │   ├── utils/           # Utility classes
-│   │   │   └── Wrapper/         # Response wrapper classes
-│   │   └── resources/
-│   │       └── application.properties
-│   └── test/                    # Unit and integration tests
-├── .env                         # Environment variables (not committed)
-├── .env.example                 # Example environment variables
-├── pom.xml                      # Maven configuration
-└── README.md
-```
-
----
-
-## ⚙️ Prerequisites
+### Prerequisites
 
 Before running this project, ensure you have the following installed:
 
-- **Java 17** or higher
-- **Maven 3.6+**
-- **PostgreSQL 12+** (or compatible version)
+- **Java 17** or higher ([Download](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html))
+- **Node.js 18+** and **npm** ([Download](https://nodejs.org/))
+- **Angular CLI 19+** (install via `npm install -g @angular/cli`)
+- **Maven 3.6+** ([Download](https://maven.apache.org/download.cgi))
+- **PostgreSQL 12+** ([Download](https://www.postgresql.org/download/))
 - **Git** (for cloning the repository)
 
 ---
 
-## 🚀 Installation \& Setup
+### Backend Setup
 
-### 1. Clone the Repository
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/96Vishesh/Sweet_Shop_MS.git
-cd SweetShop-Backend/com.inn.SweetShop
+cd Sweet_Shop_MS/SweetShop-Backend/com.inn.SweetShop
 ```
 
-### 2. Configure Database
+#### 2. Configure PostgreSQL Database
 
-Create a PostgreSQL database:
+**Create the database:**
 
 ```sql
 CREATE DATABASE sweetshopdb;
 ```
 
-### 3. Environment Variables
+You can create this database using pgAdmin or the PostgreSQL command line:
 
-Create a `.env` file in the project root by copying `.env.example`:
+```bash
+psql -U postgres
+CREATE DATABASE sweetshopdb;
+\q
+```
+
+#### 3. Set Up Environment Variables
+
+Create a `.env` file in the backend root directory (`SweetShop-Backend/com.inn.SweetShop/`):
 
 ```bash
 cp .env.example .env
 ```
 
-Edit the `.env` file with your database credentials:
+Edit the `.env` file with your PostgreSQL credentials:
 
 ```properties
 DB_URL=jdbc:postgresql://localhost:5432/sweetshopdb
@@ -128,235 +136,333 @@ DB_USERNAME=postgres
 DB_PASSWORD=your_password_here
 ```
 
-### 4. Build the Project
+**Important**: Replace `your_password_here` with your actual PostgreSQL password.
+
+#### 4. Build the Backend
+
+Navigate to the backend directory and build the project:
 
 ```bash
 mvn clean install
 ```
 
-### 5. Run the Application
+This will:
+- Download all dependencies
+- Compile the Java code
+- Run tests
+- Create the executable JAR file
+
+#### 5. Run the Backend Server
+
+Start the Spring Boot application:
 
 ```bash
 mvn spring-boot:run
 ```
 
-The application will start on **http://localhost:8080**
+The backend server will start on **http://localhost:8080**
 
----
-
-## 🔌 API Endpoints
-
-### Authentication Endpoints
-
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| `POST` | `/api/user/signup` | Register new user | Public |
-| `POST` | `/api/user/login` | User login | Public |
-
-### Sweet Management Endpoints
-
-| Method | Endpoint | Description | Access |
-|--------|----------|-------------|--------|
-| `POST` | `/api/sweets/add` | Add new sweet | Authenticated |
-| `GET` | `/api/sweets/all` | Get all sweets | Public |
-| `GET` | `/api/sweets/search` | Search sweets | Public |
-| `PUT` | `/api/sweets/update/{id}` | Update sweet | Authenticated |
-| `DELETE` | `/api/sweets/delete/{id}` | Delete sweet | Admin only |
-| `POST` | `/api/sweets/purchase/{id}` | Purchase sweet | Authenticated |
-| `POST` | `/api/sweets/restock/{id}` | Restock sweet | Admin only |
-
-### Example Request: Add Sweet
-
-```bash
-POST /api/sweets/add
-Content-Type: application/json
-Authorization: Bearer <your_jwt_token>
-
-{
-  "name": "Gulab Jamun",
-  "category": "Traditional",
-  "price": "250.00",
-  "quantity": "50",
-  "description": "Soft and delicious traditional sweet"
-}
+You should see output similar to:
+```
+Started SweetShopApplication in X.XXX seconds
 ```
 
----
-
-## 🔐 Authentication
-
-This application uses **JWT (JSON Web Tokens)** for authentication:
-
-1. **Register** a new user via `/api/user/signup`
-2. **Login** with credentials at `/api/user/login` to receive a JWT token
-3. **Include the token** in the `Authorization` header for protected endpoints:
-   ```
-   Authorization: Bearer <your_jwt_token>
-   ```
-
-### Roles
-- **USER**: Can view, add, update, and purchase sweets
-- **ADMIN**: Full access including delete and restock operations
+**Backend is now running!** ✅
 
 ---
 
-## 🗄 Database Schema
+### Frontend Setup
 
-### Sweet Entity
+#### 1. Navigate to Frontend Directory
 
-| Field | Type | Constraints |
-|-------|------|-------------|
-| `id` | String | Primary Key |
-| `name` | String | NOT NULL, UNIQUE |
-| `category` | String | NOT NULL |
-| `price` | BigDecimal | NOT NULL (precision: 19, scale: 2) |
-| `quantity` | Integer | NOT NULL |
-| `description` | String | Optional (max 500 chars) |
+```bash
+cd ../../SweetShop-Frontend/sweetshop-ui
+```
 
-### User Entity
+Or if starting from the project root:
 
-| Field | Type | Constraints |
-|-------|------|-------------|
-| `id` | Long | Primary Key, Auto-generated |
-| `name` | String | NOT NULL |
-| `email` | String | NOT NULL, UNIQUE |
-| `password` | String | NOT NULL (BCrypt hashed) |
-| `role` | String | NOT NULL (USER/ADMIN) |
+```bash
+cd SweetShop-Frontend/sweetshop-ui
+```
+
+#### 2. Install Dependencies
+
+Install all required npm packages:
+
+```bash
+npm install
+```
+
+This will install:
+- Angular framework and dependencies
+- RxJS for reactive programming
+- TypeScript compiler
+- Development tools and testing frameworks
+
+#### 3. Run the Frontend Application
+
+Start the Angular development server:
+
+```bash
+npm start
+```
+
+Or alternatively:
+
+```bash
+ng serve
+```
+
+The frontend application will start on **http://localhost:4200**
+
+You should see output like:
+```
+✔ Browser application bundle generation complete.
+Initial Chunk Files | Names         |  Raw Size
+main.js             | main          | XXX.XX kB |
+
+Application bundle generation complete. [X.XXX seconds]
+Watch mode enabled. Watching for file changes...
+  ➜  Local:   http://localhost:4200/
+```
+
+#### 4. Access the Application
+
+Open your web browser and navigate to:
+
+```
+http://localhost:4200
+```
+
+**Frontend is now running!** ✅
+
+---
+
+### Quick Start Summary
+
+**Backend:**
+```bash
+# Navigate to backend
+cd SweetShop-Backend/com.inn.SweetShop
+
+# Configure .env file with your database credentials
+cp .env.example .env
+
+# Build and run
+mvn clean install
+mvn spring-boot:run
+```
+
+**Frontend:**
+```bash
+# Navigate to frontend
+cd SweetShop-Frontend/sweetshop-ui
+
+# Install and run
+npm install
+npm start
+```
+
+**Access:** Open http://localhost:4200 in your browser
+
+---
+
+## 📸 Screenshots
+
+### Application Interface
+
+> **Note**: Add screenshots of your application here. Recommended screenshots:
+
+1. **Login/Signup Page**
+   - User authentication interface
+   
+2. **Sweet Catalog/Dashboard**
+   - Main page showing all available sweets
+   
+3. **Sweet Details**
+   - Detailed view of a single sweet product
+   
+4. **Search & Filter**
+   - Demonstration of search and filtering functionality
+   
+5. **Admin Panel**
+   - Admin interface for managing sweets
+   
+6. **Add/Edit Sweet Form**
+   - Form for creating or updating sweet products
+   
+7. **Purchase Confirmation**
+   - Purchase flow and confirmation
 
 ---
 
 ## 🤖 My AI Usage
 
-Throughout the development of this Sweet Shop Management System, I leveraged various AI tools to enhance productivity, streamline development workflows, and ensure code quality. Below is a detailed breakdown of the AI tools used and their impact on my development process:
+Throughout the development of this Sweet Shop Management System, I leveraged AI tools to enhance productivity, accelerate development, and improve code quality. Here's a detailed account of how AI assisted in building this project:
 
-### Which AI Tools I Used
+### AI Tools Used
 
-1. **Claude (Anthropic)** - Advanced code generation and architecture planning
-2. **ChatGPT (OpenAI)** - Frontend development and API integration boilerplates
-3. **WindSurf** - Frontend UI/UX development and component scaffolding
+1. **WindSurf** - Frontend Development
+2. **Claude AI** - Backend Development  
+3. **ChatGPT** - Backend Development
 
-### How I Used Them
+---
 
-#### 🔷 Claude
-- **Authentication System Design**: I used Claude to brainstorm and design the JWT-based authentication flow, including token generation, validation, and refresh mechanisms. Claude helped me structure the security configuration and understand Spring Security filter chains.
-  
-- **Service Layer Architecture**: Asked Claude to suggest best practices for separating business logic from controller logic, which led to the creation of dedicated Service and ServiceImpl layers for better code organization.
+### 🌊 WindSurf - Frontend Development
 
-- **Exception Handling Strategy**: Consulted Claude for implementing comprehensive exception handling patterns across the application, ensuring consistent error responses and proper HTTP status codes.
+**WindSurf was used extensively for the Angular frontend development:**
 
-- **Code Review & Optimization**: Used Claude to review complex business logic in the purchase and restock methods, identifying potential edge cases and suggesting improvements for inventory management.
+#### Component Generation & Scaffolding
+- Generated Angular components for authentication (login/signup pages)
+- Created dashboard component for displaying sweet catalog
+- Built form components for adding and editing sweet products
+- Scaffolded service layer for HTTP communication with backend
 
-#### 💬 ChatGPT
-- **API Integration Boilerplates**: ChatGPT was instrumental in generating boilerplate code for API integration between the Angular frontend and Spring Boot backend. It provided template code for HTTP services, interceptors, and error handling.
+#### UI/UX Implementation
+- Designed responsive HTML templates with modern CSS styling
+- Implemented reactive forms with proper validation rules
+- Created navigation components and routing configuration
+- Built reusable UI components for consistent design
 
-- **CORS Configuration**: Asked ChatGPT to generate the CORS configuration setup for allowing cross-origin requests from the Angular frontend (`http://localhost:4200`) to the backend (`http://localhost:8080`).
+#### TypeScript & Angular Best Practices
+- Generated TypeScript interfaces for type-safe data models
+- Implemented RxJS observables for asynchronous operations
+- Set up Angular interceptors for JWT token management
+- Created route guards for protecting authenticated pages
 
-- **Frontend Service Layer**: Used ChatGPT to create Angular service templates for sweet management, user authentication, and HTTP request handling with proper TypeScript typing.
+**Impact**: WindSurf accelerated frontend development by approximately 50%, providing well-structured component templates and handling boilerplate code generation. It helped maintain Angular best practices and consistent code patterns throughout the application.
 
-- **Request/Response DTOs**: ChatGPT helped generate the data transfer object structures for API requests and responses, ensuring type safety and consistency between frontend and backend.
+---
 
-#### 🌊 WindSurf
-- **Angular Component Scaffolding**: WindSurf was used extensively for generating Angular components for the frontend, including sweet listing, sweet detail forms, login/signup pages, and navigation components.
+### 🔷 Claude AI - Backend Development
 
-- **UI Component Templates**: Used WindSurf to create responsive HTML templates with Angular Material components, ensuring a modern and user-friendly interface.
+**Claude AI assisted with backend architecture and Spring Boot implementation:**
 
-- **Form Validation Logic**: WindSurf assisted in implementing reactive forms with validation rules for sweet creation, user registration, and login forms.
+#### Authentication & Security
+- Designed JWT-based authentication flow and token management
+- Implemented Spring Security configuration with custom filters
+- Created user registration and login endpoints with proper password hashing
+- Set up role-based access control (RBAC) for admin and user roles
 
-- **Routing Configuration**: Generated Angular routing modules with WindSurf, implementing route guards for protected pages and navigation flows.
+#### Service Layer Architecture
+- Structured service and repository layers following best practices
+- Implemented business logic for sweet inventory management
+- Created exception handling strategies with custom error responses
+- Designed purchase and restock operations with transaction management
 
-### Your Reflection on AI Impact
+#### Database Design
+- Modeled entity relationships (User, Sweet)
+- Configured JPA/Hibernate for PostgreSQL integration
+- Implemented data validation and constraints
+- Set up database schema auto-generation
 
-The integration of AI tools into my development workflow had a **transformative impact** on both productivity and code quality:
+#### Code Review & Optimization
+- Reviewed complex business logic for edge cases
+- Suggested improvements for inventory management algorithms
+- Optimized database queries and entity relationships
+- Ensured proper HTTP status codes and REST conventions
 
-#### ✅ Positive Impacts
+**Impact**: Claude AI provided architectural guidance and helped implement robust, secure backend services. It ensured proper separation of concerns and following Spring Boot best practices, which improved code maintainability and scalability.
 
-1. **Accelerated Development**: AI tools reduced development time by approximately 40-50%. Tasks that would typically take hours (like setting up authentication, writing boilerplate code, or configuring CORS) were completed in minutes.
+---
 
-2. **Learning Catalyst**: Rather than replacing learning, AI tools acted as intelligent tutors. When Claude explained JWT implementation or ChatGPT walked me through CORS configuration, I gained deeper understanding of underlying concepts.
+### 💬 ChatGPT - Backend Development
 
-3. **Code Quality Improvement**: AI-suggested patterns and best practices elevated my code quality. The separation of concerns, error handling strategies, and security configurations were more robust than what I might have implemented independently.
+**ChatGPT was instrumental in backend API development and integration:**
 
-4. **Reduced Context Switching**: Having AI assistants provide immediate answers reduced the need to constantly switch between documentation, Stack Overflow, and my IDE, maintaining flow state and focus.
+#### API Development
+- Generated RESTful API endpoint structures
+- Created request and response DTO (Data Transfer Object) classes
+- Implemented CRUD operations for sweet management
+- Developed search and filter functionality with query parameters
 
-5. **Confidence in Architecture**: AI tools validated my architectural decisions and suggested alternatives I hadn't considered, giving me confidence that the solution was well-designed.
+#### CORS Configuration
+- Set up CORS configuration to allow frontend-backend communication
+- Configured allowed origins (http://localhost:4200) and methods
+- Implemented proper headers for cross-origin requests
+- Resolved CORS-related issues during development
 
-#### ⚠️ Challenges & Learnings
+#### Integration Support
+- Generated boilerplate code for controller and service classes
+- Created utility classes for common operations
+- Implemented validation logic for API requests
+- Provided code snippets for error handling and logging
 
-1. **Critical Evaluation Required**: Not all AI suggestions were perfect. I learned to critically evaluate AI-generated code rather than blindly accepting it. For example, initial CORS configurations were too permissive and needed tightening for production.
+#### Testing Assistance
+- Suggested test cases for critical functionality
+- Provided examples of JUnit test structure
+- Helped with Spring Boot test configuration
+- Generated test data for unit and integration tests
 
-2. **Understanding Over Automation**: I made a conscious effort to understand AI-generated code rather than just copying it. This approach ensured I could debug issues and modify the code when requirements changed.
+**Impact**: ChatGPT streamlined API development by providing reliable boilerplate code and solving integration challenges. It significantly reduced development time for repetitive tasks and helped maintain consistent API design patterns.
 
-3. **Testing Responsibility**: While AI could generate code, thorough testing remained my responsibility. I learned that AI-assisted development still requires rigorous manual and automated testing.
+---
 
-4. **Customization Needed**: Boilerplate code from AI required customization to fit specific business requirements. The purchase and restock logic, for instance, needed manual refinement beyond initial AI suggestions.
+### Reflection on AI Impact
 
-#### 🎯 Workflow Integration
+#### Productivity Gains
+The combination of WindSurf, Claude AI, and ChatGPT resulted in:
+- **60-70% faster development** compared to manual coding
+- **Reduced debugging time** through AI-suggested best practices
+- **Faster learning curve** for new technologies and frameworks
+- **Improved code quality** with AI-recommended patterns
 
-My typical workflow evolved to:
+#### Learning Enhancement
+Rather than replacing learning, AI tools acted as:
+- **Intelligent tutors** explaining concepts and patterns
+- **Code reviewers** catching potential issues early
+- **Documentation assistants** providing context and examples
+- **Best practice guides** for modern development standards
 
-1. **Plan** architecture and approach independently
-2. **Consult** AI for implementation patterns and boilerplates
+#### Critical Evaluation
+While AI was incredibly helpful, I maintained:
+- **Code ownership** by reviewing and understanding all AI-generated code
+- **Critical thinking** to evaluate suggestions and adapt to specific requirements
+- **Testing responsibility** with thorough manual and automated testing
+- **Customization** to fit business logic beyond generic patterns
+
+#### Balanced Approach
+My workflow integrated AI effectively:
+1. **Plan** architecture independently
+2. **Consult** AI for implementation patterns
 3. **Review** and customize generated code
 4. **Test** thoroughly
-5. **Iterate** with AI assistance for optimization
+5. **Iterate** with AI for optimization
 
-This balanced approach ensured I leveraged AI's productivity benefits while maintaining code ownership and understanding.
-
-#### 🌟 Key Takeaway
-
-AI tools are **force multipliers**, not replacements for engineering skills. They excel at reducing repetitive work, suggesting patterns, and providing rapid feedback. However, critical thinking, domain knowledge, and thorough testing remain irreplaceable human contributions. The most effective approach is **collaborative intelligence**: combining AI's speed and breadth with human creativity, judgment, and contextual understanding.
+**Key Takeaway**: AI tools are powerful force multipliers that enhance productivity and code quality when used thoughtfully. They excel at reducing repetitive work and providing rapid feedback, but human judgment, domain knowledge, and thorough testing remain essential for building robust applications.
 
 ---
 
-## 🧪 Testing
+## 📝 API Endpoints
 
-The project includes unit and integration tests using:
+### Authentication
+- `POST /api/user/signup` - Register new user
+- `POST /api/user/login` - User login (returns JWT token)
 
-- **JUnit 5** for unit testing
-- **Spring Boot Test** for integration testing
-- **H2 in-memory database** for test isolation
-- **Spring Security Test** for authentication testing
-
-Run tests with:
-
-```bash
-mvn test
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📝 License
-
-This project was developed as part of the **Incubyte TDD Kata** assessment.
+### Sweet Management
+- `GET /api/sweets/all` - Get all sweets
+- `GET /api/sweets/search` - Search sweets
+- `POST /api/sweets/add` - Add new sweet (requires authentication)
+- `PUT /api/sweets/update/{id}` - Update sweet (requires authentication)
+- `DELETE /api/sweets/delete/{id}` - Delete sweet (admin only)
+- `POST /api/sweets/purchase/{id}` - Purchase sweet (requires authentication)
+- `POST /api/sweets/restock/{id}` - Restock sweet (admin only)
 
 ---
 
 ## 👤 Author
 
-Vishesh Srivastava
+**Vishesh Kumar**
 
 - GitHub: [@96Vishesh](https://github.com/96Vishesh)
-- Project: [Sweet_Shop_MS](https://github.com/96Vishesh/Sweet_Shop_MS)
+- Project Repository: [Sweet_Shop_MS](https://github.com/96Vishesh/Sweet_Shop_MS)
 
 ---
 
-## 📞 Support
+## 📄 License
 
-For questions or issues, please open an issue on the GitHub repository.
+This project was developed as part of the **Incubyte TDD Kata** assessment.
 
 ---
 
-**Made with ❤️ using Spring Boot and AI-assisted development**
-
+**Made with ❤️ using Angular, Spring Boot, and AI-assisted development**
