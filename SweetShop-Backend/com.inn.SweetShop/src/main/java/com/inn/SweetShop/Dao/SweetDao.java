@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface SweetDao extends JpaRepository<Sweet, Long> {
+public interface SweetDao extends JpaRepository<Sweet, String> {
 
     // Search by name (case-insensitive)
     List<Sweet> findByNameContainingIgnoreCase(String name);
@@ -21,14 +21,24 @@ public interface SweetDao extends JpaRepository<Sweet, Long> {
     // Search by price range
     List<Sweet> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
 
-    // Combined search query
-    @Query("SELECT s FROM Sweet s WHERE " +
-            "(:name IS NULL OR LOWER(s.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
-            "(:category IS NULL OR LOWER(s.category) LIKE LOWER(CONCAT('%', :category, '%'))) AND " +
-            "(:minPrice IS NULL OR s.price >= :minPrice) AND " +
-            "(:maxPrice IS NULL OR s.price <= :maxPrice)")
-    List<Sweet> searchSweets(@Param("name") String name,
-                             @Param("category") String category,
-                             @Param("minPrice") BigDecimal minPrice,
-                             @Param("maxPrice") BigDecimal maxPrice);
+    // ✅ FIXED Combined Search (PostgreSQL-safe)
+    @Query(
+            value = """
+            SELECT *
+            FROM sweets
+            WHERE (:name IS NULL OR name ILIKE '%' || :name || '%')
+              AND (:category IS NULL OR category ILIKE '%' || :category || '%')
+              AND (:minPrice IS NULL OR price >= :minPrice)
+              AND (:maxPrice IS NULL OR price <= :maxPrice)
+        """,
+            nativeQuery = true
+    )
+    List<Sweet> searchSweets(
+            @Param("name") String name,
+            @Param("category") String category,
+            @Param("minPrice") BigDecimal minPrice,
+            @Param("maxPrice") BigDecimal maxPrice
+    );
+    @Query(value = "SELECT id FROM sweets ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    String getLastSweetId();
 }

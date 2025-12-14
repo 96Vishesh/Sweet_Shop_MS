@@ -14,8 +14,10 @@ import java.math.BigDecimal;
 public class Sweet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
+    private String id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -23,7 +25,7 @@ public class Sweet {
     @Column(nullable = false)
     private String category;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal price;
 
     @Column(nullable = false)
