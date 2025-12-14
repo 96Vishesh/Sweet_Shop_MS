@@ -39,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
         // Skip JWT validation for login and forgot password endpoints
-        if (httpServletRequest.getServletPath().matches("/api/auth/login|/api/auth/forgotPassword")) {
+        if (httpServletRequest.getServletPath().matches("/api/auth/login|/api/auth/forgotPassword|/api/auth/signup")) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         } else {
             // Extract token from Authorization header
@@ -69,18 +69,38 @@ public class JwtFilter extends OncePerRequestFilter {
         }
     }
 
-    // Check if current user has admin role
+    /**
+     * Check if current user has admin role
+     * @return true if user is admin, false otherwise
+     */
     public boolean isAdmin() {
         return claims != null && "admin".equalsIgnoreCase((String) claims.get("role"));
     }
 
-    // Check if current user has user role
+    /**
+     * Check if current user is authenticated (either admin or user)
+     * This allows both admins and regular users to access protected endpoints
+     * @return true if user is authenticated (admin or user), false otherwise
+     */
     public boolean isUser() {
-        return claims != null && "user".equalsIgnoreCase((String) claims.get("role"));
+        return claims != null &&
+                ("user".equalsIgnoreCase((String) claims.get("role")) ||
+                        "admin".equalsIgnoreCase((String) claims.get("role")));
     }
 
-    // Get current authenticated username
+    /**
+     * Get current authenticated username
+     * @return username of the authenticated user, or null if not authenticated
+     */
     public String getCurrentUser() {
         return userName;
+    }
+
+    /**
+     * Get current user's role
+     * @return role of the authenticated user, or null if not authenticated
+     */
+    public String getCurrentUserRole() {
+        return claims != null ? (String) claims.get("role") : null;
     }
 }

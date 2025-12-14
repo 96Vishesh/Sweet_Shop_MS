@@ -49,9 +49,10 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless JWT authentication
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints - no authentication required
-                        .requestMatchers("/api/auth/login", "/api/auth/signup").permitAll()
-                        .requestMatchers("/api/sweets", "/api/sweets/search").permitAll()
+                        // Public endpoints - no authentication required (Auth endpoints only)
+                        .requestMatchers("/api/auth/login", "/api/auth/signup", "/api/auth/forgotPassword").permitAll()
+                        // All sweet endpoints require authentication
+                        .requestMatchers("/api/sweets/**").authenticated()
                         // All other endpoints require authentication
                         .anyRequest().authenticated()
                 )
