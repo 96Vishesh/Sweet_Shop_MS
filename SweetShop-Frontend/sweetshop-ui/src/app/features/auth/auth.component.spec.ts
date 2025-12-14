@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthComponent } from './auth.component';
 import { AuthService } from '../../core/services/auth.service';
@@ -18,11 +18,13 @@ describe('AuthComponent', () => {
       imports: [
         AuthComponent,
         HttpClientTestingModule,
-        RouterTestingModule,
         FormsModule
       ],
       providers: [
-        { provide: AuthService, useValue: authServiceSpy }
+        { provide: AuthService, useValue: authServiceSpy },
+        provideRouter([
+          { path: 'dashboard', component: AuthComponent }
+        ])
       ]
     }).compileComponents();
 
