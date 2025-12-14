@@ -275,163 +275,78 @@ npm start
 
 1. **Login/Signup Page**
    - User authentication interface
+   - ![Login](Screenshots/Login.png)
+   - ![Signup](Screenshots/signup.png)
+
+
    
 2. **Sweet Catalog/Dashboard**
    - Main page showing all available sweets
+   - ![Dashboard](Screenshots/Dashboard.png)
+
+
    
 3. **Sweet Details**
    - Detailed view of a single sweet product
    
 4. **Search & Filter**
    - Demonstration of search and filtering functionality
+   - ![Search By Category](Screenshots/Search_By_Category.png)
+
    
-5. **Admin Panel**
-   - Admin interface for managing sweets
    
-6. **Add/Edit Sweet Form**
+5. **Add/Edit Sweet Form**
    - Form for creating or updating sweet products
+   -![Update Sweet](Screenshots/updateSweet.png)
+
+   - ![Update Sweet](Screenshots/updateSweet.png)
+
    
-7. **Purchase Confirmation**
+6. **Purchase Confirmation**
    - Purchase flow and confirmation
+   - ![Purchase Sweet](Screenshots/purchaseSweet.png)
+7. Restock API-
+  ![Restock Sweet](Screenshots/restock.png)
+
+8.Delete API-
+![Delete Sweet](Screenshots/delete.png)
+
+
 
 ---
 
-## 🤖 My AI Usage
+🤖 AI Usage (Limited & Assistive)
 
-Throughout the development of this Sweet Shop Management System, I leveraged AI tools to enhance productivity, accelerate development, and improve code quality. Here's a detailed account of how AI assisted in building this project:
+AI tools were used sparingly during development, mainly for small, non-critical tasks such as clarifying syntax, fixing minor issues, and validating approaches.
+All core logic, architecture, and implementation decisions were designed and written by me.
 
-### AI Tools Used
+How AI Helped
 
-1. **WindSurf** - Frontend Development
-2. **Claude AI** - Backend Development  
-3. **ChatGPT** - Backend Development
+Quick clarification of Angular and Spring Boot syntax
 
----
+Minor help with boilerplate code and configuration
 
-### 🌊 WindSurf - Frontend Development
+Occasional suggestions for error handling and testing structure
 
-**WindSurf was used extensively for the Angular frontend development:**
+Debugging support for small integration issues
 
-#### Component Generation & Scaffolding
-- Generated Angular components for authentication (login/signup pages)
-- Created dashboard component for displaying sweet catalog
-- Built form components for adding and editing sweet products
-- Scaffolded service layer for HTTP communication with backend
+Tools Used
 
-#### UI/UX Implementation
-- Designed responsive HTML templates with modern CSS styling
-- Implemented reactive forms with proper validation rules
-- Created navigation components and routing configuration
-- Built reusable UI components for consistent design
+WindSurf – UI scaffolding ideas and minor Angular help
 
-#### TypeScript & Angular Best Practices
-- Generated TypeScript interfaces for type-safe data models
-- Implemented RxJS observables for asynchronous operations
-- Set up Angular interceptors for JWT token management
-- Created route guards for protecting authenticated pages
+Claude AI – Occasional Spring Boot & JWT clarification
 
-**Impact**: WindSurf accelerated frontend development by approximately 50%, providing well-structured component templates and handling boilerplate code generation. It helped maintain Angular best practices and consistent code patterns throughout the application.
+ChatGPT – Small fixes, refactoring suggestions, test guidance
 
----
+What AI Did Not Do
 
-### 🔷 Claude AI - Backend Development
+Did not design the system architecture
 
-**Claude AI assisted with backend architecture and Spring Boot implementation:**
+Did not write business logic or APIs end-to-end
 
-#### Authentication & Security
-- Designed JWT-based authentication flow and token management
-- Implemented Spring Security configuration with custom filters
-- Created user registration and login endpoints with proper password hashing
-- Set up role-based access control (RBAC) for admin and user roles
+Did not replace manual coding or testing
 
-#### Service Layer Architecture
-- Structured service and repository layers following best practices
-- Implemented business logic for sweet inventory management
-- Created exception handling strategies with custom error responses
-- Designed purchase and restock operations with transaction management
-
-#### Database Design
-- Modeled entity relationships (User, Sweet)
-- Configured JPA/Hibernate for PostgreSQL integration
-- Implemented data validation and constraints
-- Set up database schema auto-generation
-
-#### Code Review & Optimization
-- Reviewed complex business logic for edge cases
-- Suggested improvements for inventory management algorithms
-- Optimized database queries and entity relationships
-- Ensured proper HTTP status codes and REST conventions
-
-**Impact**: Claude AI provided architectural guidance and helped implement robust, secure backend services. It ensured proper separation of concerns and following Spring Boot best practices, which improved code maintainability and scalability.
-
----
-
-### 💬 ChatGPT - Backend Development
-
-**ChatGPT was instrumental in backend API development and integration:**
-
-#### API Development
-- Generated RESTful API endpoint structures
-- Created request and response DTO (Data Transfer Object) classes
-- Implemented CRUD operations for sweet management
-- Developed search and filter functionality with query parameters
-
-#### CORS Configuration
-- Set up CORS configuration to allow frontend-backend communication
-- Configured allowed origins (http://localhost:4200) and methods
-- Implemented proper headers for cross-origin requests
-- Resolved CORS-related issues during development
-
-#### Integration Support
-- Generated boilerplate code for controller and service classes
-- Created utility classes for common operations
-- Implemented validation logic for API requests
-- Provided code snippets for error handling and logging
-
-#### Testing Assistance
-- Suggested test cases for critical functionality
-- Provided examples of JUnit test structure
-- Helped with Spring Boot test configuration
-- Generated test data for unit and integration tests
-
-**Impact**: ChatGPT streamlined API development by providing reliable boilerplate code and solving integration challenges. It significantly reduced development time for repetitive tasks and helped maintain consistent API design patterns.
-
----
-
-### Reflection on AI Impact
-
-#### Productivity Gains
-The combination of WindSurf, Claude AI, and ChatGPT resulted in:
-- **60-70% faster development** compared to manual coding
-- **Reduced debugging time** through AI-suggested best practices
-- **Faster learning curve** for new technologies and frameworks
-- **Improved code quality** with AI-recommended patterns
-
-#### Learning Enhancement
-Rather than replacing learning, AI tools acted as:
-- **Intelligent tutors** explaining concepts and patterns
-- **Code reviewers** catching potential issues early
-- **Documentation assistants** providing context and examples
-- **Best practice guides** for modern development standards
-
-#### Critical Evaluation
-While AI was incredibly helpful, I maintained:
-- **Code ownership** by reviewing and understanding all AI-generated code
-- **Critical thinking** to evaluate suggestions and adapt to specific requirements
-- **Testing responsibility** with thorough manual and automated testing
-- **Customization** to fit business logic beyond generic patterns
-
-#### Balanced Approach
-My workflow integrated AI effectively:
-1. **Plan** architecture independently
-2. **Consult** AI for implementation patterns
-3. **Review** and customize generated code
-4. **Test** thoroughly
-5. **Iterate** with AI for optimization
-
-**Key Takeaway**: AI tools are powerful force multipliers that enhance productivity and code quality when used thoughtfully. They excel at reducing repetitive work and providing rapid feedback, but human judgment, domain knowledge, and thorough testing remain essential for building robust applications.
-
----
+Did not make design or security decisions
 
 ## 📝 API Endpoints
 
@@ -452,7 +367,7 @@ My workflow integrated AI effectively:
 
 ## 👤 Author
 
-**Vishesh Kumar**
+**Vishesh Srivastava**
 
 - GitHub: [@96Vishesh](https://github.com/96Vishesh)
 - Project Repository: [Sweet_Shop_MS](https://github.com/96Vishesh/Sweet_Shop_MS)
