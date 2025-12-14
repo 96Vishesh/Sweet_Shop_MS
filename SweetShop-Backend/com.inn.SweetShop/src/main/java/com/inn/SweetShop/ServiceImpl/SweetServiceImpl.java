@@ -97,10 +97,10 @@ public class SweetServiceImpl implements SweetService {
             }
 
             if (validateSweetMap(requestMap, true)) {
-                Optional<Sweet> optional = sweetDao.findById(id);
+                Optional<Sweet> optional = sweetDao.findById(String.valueOf(id));
                 if (optional.isPresent()) {
                     Sweet sweet = getSweetFromMap(requestMap, true);
-                    sweet.setId(id);
+                    sweet.setId(String.valueOf(id));
                     sweetDao.save(sweet);
                     return SweetUtils.getResponseEntity("Sweet updated successfully", HttpStatus.OK);
                 }
@@ -125,9 +125,9 @@ public class SweetServiceImpl implements SweetService {
                 return SweetUtils.getResponseEntity(SweetConstants.UNAUTHORIZED_ACCESS, HttpStatus.FORBIDDEN);
             }
 
-            Optional<Sweet> optional = sweetDao.findById(id);
+            Optional<Sweet> optional = sweetDao.findById(String.valueOf(id));
             if (optional.isPresent()) {
-                sweetDao.deleteById(id);
+                sweetDao.deleteById(String.valueOf(id));
                 return SweetUtils.getResponseEntity("Sweet deleted successfully", HttpStatus.OK);
             }
             return SweetUtils.getResponseEntity("Sweet not found", HttpStatus.NOT_FOUND);
@@ -146,7 +146,7 @@ public class SweetServiceImpl implements SweetService {
                 return SweetUtils.getResponseEntity(SweetConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
             }
 
-            Optional<Sweet> optional = sweetDao.findById(id);
+            Optional<Sweet> optional = sweetDao.findById(String.valueOf(id));
             if (optional.isPresent()) {
                 Sweet sweet = optional.get();
                 if (sweet.getQuantity() >= quantity) {
@@ -174,7 +174,7 @@ public class SweetServiceImpl implements SweetService {
                 return SweetUtils.getResponseEntity(SweetConstants.UNAUTHORIZED_ACCESS, HttpStatus.FORBIDDEN);
             }
 
-            Optional<Sweet> optional = sweetDao.findById(id);
+            Optional<Sweet> optional = sweetDao.findById(String.valueOf(id));
             if (optional.isPresent()) {
                 Sweet sweet = optional.get();
                 sweet.setQuantity(sweet.getQuantity() + quantity);
@@ -198,9 +198,30 @@ public class SweetServiceImpl implements SweetService {
         }
         return false;
     }
+    private String generateSweetId() {
+        String lastId = sweetDao.getLastSweetId(); // Example: "S000129"
+        int nextIdNumber = 1;
+
+        if (lastId != null && lastId.startsWith("S")) {
+            String numberPart = lastId.substring(1); // remove "S"
+            try {
+                nextIdNumber = Integer.parseInt(numberPart) + 1;
+            } catch (NumberFormatException e) {
+                // Handle corrupted data
+                nextIdNumber = 1;
+            }
+        }
+        // Format with leading zeros
+        return String.format("S%06d", nextIdNumber); // S000130
+    }
 
     private Sweet getSweetFromMap(Map<String, String> requestMap, boolean isUpdate) {
         Sweet sweet = new Sweet();
+        if (isUpdate) {
+        } else {
+            sweet.setId(generateSweetId());
+        }
+
         sweet.setName(requestMap.get("name"));
         sweet.setCategory(requestMap.get("category"));
         sweet.setPrice(new BigDecimal(requestMap.get("price")));
