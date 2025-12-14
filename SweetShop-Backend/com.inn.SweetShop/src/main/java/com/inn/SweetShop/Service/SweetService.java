@@ -14,11 +14,11 @@ public interface SweetService {
     ResponseEntity<List<Sweet>> searchSweets(String name, String category,
                                              BigDecimal minPrice, BigDecimal maxPrice);
 
-    ResponseEntity<String> updateSweet(Long id, Map<String, String> requestMap);
+    ResponseEntity<String> updateSweet(String id, Map<String, String> requestMap);
 
-    ResponseEntity<String> deleteSweet(Long id);
+    ResponseEntity<String> deleteSweet(String id);
 
-    ResponseEntity<String> purchaseSweet(Long id, Integer quantity);
+    ResponseEntity<String> purchaseSweet(String id, Integer quantity);
 
-    ResponseEntity<String> restockSweet(Long id, Integer quantity);
+    ResponseEntity<String> restockSweet(String id, Integer quantity);
 }

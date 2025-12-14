@@ -89,7 +89,7 @@ public class SweetServiceImpl implements SweetService {
 
     // PUT /api/sweets/:id - Protected (Any authenticated user)
     @Override
-    public ResponseEntity<String> updateSweet(Long id, Map<String, String> requestMap) {
+    public ResponseEntity<String> updateSweet(String id, Map<String, String> requestMap) {
         try {
             // Check if user is authenticated
             if (!jwtFilter.isUser()) {
@@ -118,7 +118,7 @@ public class SweetServiceImpl implements SweetService {
 
     // DELETE /api/sweets/:id - Protected (Admin only)
     @Override
-    public ResponseEntity<String> deleteSweet(Long id) {
+    public ResponseEntity<String> deleteSweet(String id) {
         try {
             // Check if user is admin
             if (!jwtFilter.isAdmin()) {
@@ -139,7 +139,7 @@ public class SweetServiceImpl implements SweetService {
 
     // POST /api/sweets/:id/purchase - Protected (Any authenticated user)
     @Override
-    public ResponseEntity<String> purchaseSweet(Long id, Integer quantity) {
+    public ResponseEntity<String> purchaseSweet(String id, Integer quantity) {
         try {
             // Check if user is authenticated
             if (!jwtFilter.isUser()) {
@@ -167,7 +167,7 @@ public class SweetServiceImpl implements SweetService {
 
     // POST /api/sweets/:id/restock - Protected (Admin only)
     @Override
-    public ResponseEntity<String> restockSweet(Long id, Integer quantity) {
+    public ResponseEntity<String> restockSweet(String id, Integer quantity) {
         try {
             // Check if user is admin
             if (!jwtFilter.isAdmin()) {
@@ -212,7 +212,7 @@ public class SweetServiceImpl implements SweetService {
             }
         }
         // Format with leading zeros
-        return String.format("S%06d", nextIdNumber); // S000130
+        return String.format("S%06d", nextIdNumber);
     }
 
     private Sweet getSweetFromMap(Map<String, String> requestMap, boolean isUpdate) {

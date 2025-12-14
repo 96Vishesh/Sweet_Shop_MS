@@ -56,7 +56,7 @@ public class SweetRestImpl implements SweetRest {
     }
 
     @Override
-    public ResponseEntity<String> updateSweet(Long id, Map<String, String> requestMap) {
+    public ResponseEntity<String> updateSweet(String id, Map<String, String> requestMap) {
         try {
             return sweetService.updateSweet(id, requestMap);
         } catch (Exception ex) {
@@ -66,7 +66,7 @@ public class SweetRestImpl implements SweetRest {
     }
 
     @Override
-    public ResponseEntity<String> deleteSweet(Long id) {
+    public ResponseEntity<String> deleteSweet(String id) {
         try {
             // Check if user is admin
             if (jwtFilter.isAdmin()) {
@@ -81,7 +81,7 @@ public class SweetRestImpl implements SweetRest {
     }
 
     @Override
-    public ResponseEntity<String> purchaseSweet(Long id, Map<String, Integer> requestMap) {
+    public ResponseEntity<String> purchaseSweet(String id, Map<String, Integer> requestMap) {
         try {
             Integer quantity = requestMap.get("quantity");
             if (quantity != null && quantity > 0) {
@@ -95,7 +95,7 @@ public class SweetRestImpl implements SweetRest {
     }
 
     @Override
-    public ResponseEntity<String> restockSweet(Long id, Map<String, Integer> requestMap) {
+    public ResponseEntity<String> restockSweet(String id, Map<String, Integer> requestMap) {
         try {
             // Check if user is admin
             if (jwtFilter.isAdmin()) {

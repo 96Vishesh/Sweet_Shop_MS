@@ -14,9 +14,7 @@ import java.math.BigDecimal;
 public class Sweet {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-
+    @Column(name="id")
     private String id;
 
     @Column(nullable = false, unique = true)
