@@ -345,7 +345,7 @@ This project was developed as part of the **Incubyte TDD Kata** assessment.
 
 ## 👤 Author
 
-**Vishesh Kumar**
+Vishesh Srivastava
 
 - GitHub: [@96Vishesh](https://github.com/96Vishesh)
 - Project: [Sweet_Shop_MS](https://github.com/96Vishesh/Sweet_Shop_MS)
@@ -359,3 +359,4 @@ For questions or issues, please open an issue on the GitHub repository.
 ---
 
 **Made with ❤️ using Spring Boot and AI-assisted development**
+
